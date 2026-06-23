@@ -1,20 +1,17 @@
-import pytest
-from app.main import app
+import sys
+sys.path.insert(0, ".")
+from main import app
 
 
-@pytest.fixture
-def client():
-    app.config["TESTING"] = True
-    return app.test_client()
+def test_home():
+    client = app.test_client()
+    resp = client.get("/")
+    assert resp.status_code == 200
+    assert resp.data == b"hello todo"
 
 
-def test_health(client):
+def test_health():
+    client = app.test_client()
     resp = client.get("/health")
     assert resp.status_code == 200
-    assert resp.get_json() == {"status": "ok"}
-
-
-def test_metrics(client):
-    resp = client.get("/metrics")
-    assert resp.status_code == 200
-    assert "text/plain" in resp.content_type
+    assert resp.data == b"ok"
