@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: app
-          image: todo-app:latest
-          imagePullPolicy: Never
+           image: respectceg/todo-app:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           resources:
